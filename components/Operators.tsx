@@ -81,11 +81,11 @@ const Operators: React.FunctionComponent = () => {
     <Div>
       <H1>пополнение мобильного</H1>
       <List>
-        {operators.map(item => {
+        {operators.map(name => {
           return (
-            <Li key={item}>
-              <Link href={`/payment?name=${item}`} as={`/payment/${item}`}>
-                <a>{item}</a>
+            <Li key={name}>
+              <Link href={"/payment/[name]"} as={`/payment/${name}`}>
+                <a>{name}</a>
               </Link>
             </Li>
           );

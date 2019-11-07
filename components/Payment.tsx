@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Props } from "../interfaces";
 import classNames from "classnames";
 import InputMask  from 'react-input-mask';
-import CSS from 'csstype'
+// import CSS from 'csstype'
 
 const Form = styled.form`
   display: flex;
@@ -57,9 +57,9 @@ const Div = styled.div`
     }
   }
 `;
-const mask: CSS.Properties = {
+// const mask: CSS.Properties = {
   
-} 
+// } 
 
 
 const PaymentForm: React.FunctionComponent<Props> = ({
