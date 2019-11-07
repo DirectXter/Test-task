@@ -8,3 +8,11 @@ export type User = {
   id: number
   name: string
 }
+
+export type Props = {
+  title?: string
+  id?: string
+  className?: string
+  error?: string
+  label?: string
+}
