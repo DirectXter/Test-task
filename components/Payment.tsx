@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Props } from "../interfaces";
+// import { StatelessPage } from "../interfaces";
 import classNames from "classnames";
-import InputMask  from 'react-input-mask';
+// import fetch from "isomorphic-unfetch";
 // import CSS from 'csstype'
 
 const Form = styled.form`
@@ -24,7 +24,7 @@ const Input = styled.input`
   outline: none;
   border: solid 1px white;
   ::-webkit-outer-spin-button,
-  ::-webkit-inner-spin-button{
+  ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -50,68 +50,71 @@ const Div = styled.div`
   animation: 0.5s ease-out 0s 1 normal appear;
   @keyframes appear {
     from {
-      transform: translateX(-900px);
+      transform: translateY(900px);
     }
     to {
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
 `;
-// const mask: CSS.Properties = {
-  
-// } 
+// const inputTel: CSS.Properties = {
+//   display: none
+// }
 
-
-const PaymentForm: React.FunctionComponent<Props> = ({
-  id,
-  className,
-  label,
-  error,
-  ...attrs
-}) => {
-  const classes = classNames("input", "className", { error });
+const PaymentForm = ({ ...attrs }) => {
+  const classes = classNames("input", "className");
   const [numberValue, setNumber] = React.useState();
-  const [amountValue, setAmount] = React.useState<string>('');
-  
-  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
-    setNumber(value);
-  }
-  
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
-    setAmount(value);
+  const [amountValue, setAmount] = React.useState<string>("");
+
+  const handleNumberChange = (e: any): void => {
+    let a = e.target.value;
+    let b = a.replace(/\D/g,'').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,4})/);
+    a = !b[3] ? '+7'+ b[2] : '+7' + '(' + b[2] + ') ' + b[3] + (b[4] ? '-' + b[4]: '');
+    setNumber(a);
   };
-  
+
+  const handleAmountChange = (e: any): void => {
+    let a = e.target.value;
+    let b = a.replace(/\D/g,'').match(/(\d{0,4})/);
+    a = b[1] > 1000 ? 1000 : b[1];
+    setAmount(a);
+  };
+
+  const handleFormSubmit = (e: any):void =>{e.target}
 
   return (
     <Div>
       <Form>
-        {label && (
-          <label className="inputLabel" htmlFor={id}>
-            {label}
-          </label>
-        )}
-        {attrs && <span className="inputRequired"></span>}
-        
-        <InputMask mask={"+7\999 999 9999"} required value={numberValue} onChange={handleNumberChange}/>
-        
-        
-          {error && <span className="inputError">{error}</span>}
-        
-        <Input 
-        type="number"
-        className={classes}
-        value={amountValue}
-        onChange={handleAmountChange}
-        {...attrs}
-        >
-        </Input>
-
-        <Button type="submit">Оплатить</Button>
+        <label className="inputLabel">Номер</label>
+        <span className="inputRequired"></span>
+        <Input
+          type='tel'
+          placeholder="+7 (999) 999-9999"
+          required
+          value={numberValue}
+          onChange={handleNumberChange}
+        />
+        <span className="inputError"></span>
+        <Input
+          type='number'
+          className={classes}
+          value={amountValue}
+          onChange={handleAmountChange}
+          {...attrs}
+        ></Input>
+        <Button type="submit" onSubmit={handleFormSubmit}>Оплатить</Button>
       </Form>
     </Div>
   );
 };
+
+//  PaymentForm.getInitialProps = async function() {
+//    const res = await fetch('../pages/api');
+//    const data = await res.json();
+
+//    console.log("s");
+
+//    return {};
+//  };
 
 export default PaymentForm;

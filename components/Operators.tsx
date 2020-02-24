@@ -40,6 +40,11 @@ const Li = styled.li`
   :last-child {
     border-radius: 0 0 10px 10px;
   }
+  :hover{
+    transition-duration: .5s;
+    background-color: white;
+    color: deepskyblue;
+  }
 `;
 const Form = styled.form`
   margin: auto;
@@ -53,12 +58,18 @@ const Button = styled.button`
   border-radius: 0 10px 10px 0;
   outline: none;
   cursor: pointer;
-`;
+  :active{
+    opacity: 0.9;
+  }
+  `;
 const Input = styled.input`
   border: solid deepskyblue;
   border-width: 1px 0px 1px 1px;
   flex-basis: auto;
   padding-left: 10px;
+`;
+const A = styled.a`
+  color:inherit;
 `;
 
 const Operators: React.FunctionComponent = () => {
@@ -70,12 +81,14 @@ const Operators: React.FunctionComponent = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): any => {
     e.preventDefault();
-    setOperator([...operators, inputText]);
+    if (inputText != '') {
+      setOperator([...operators, inputText]);
+    }
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-  }
+  };
 
   return (
     <Div>
@@ -85,7 +98,7 @@ const Operators: React.FunctionComponent = () => {
           return (
             <Li key={name}>
               <Link href={"/payment/[name]"} as={`/payment/${name}`}>
-                <a>{name}</a>
+                <A>{name}</A>
               </Link>
             </Li>
           );

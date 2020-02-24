@@ -16,3 +16,12 @@ export type Props = {
   error?: string
   label?: string
 }
+
+export interface StatelessPage<P = {}> extends React.SFC<P> {
+  getInitialProps?: (ctx: any) => Promise<P>
+  title?: string
+  id?: string
+  className?: string
+  error?: string
+  label?: string
+}

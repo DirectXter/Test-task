@@ -8,6 +8,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   html,
   body {
+    overflow: hidden;
     background: linear-gradient(30deg, #260138, #03031B);
     font-family: monospace;
     height: 100vh;
